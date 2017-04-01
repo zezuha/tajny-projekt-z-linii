@@ -13,6 +13,7 @@ public class SoundReaction {
     private FFT fft;
     private int bandsCount;
     private float[] bandValues;
+    private float smoothFactor;
 
     public SoundReaction(PApplet parent, int bandsCount) {
         this.parent = parent;
@@ -26,6 +27,7 @@ public class SoundReaction {
         for (int i = 0; i < bandsCount; i++) {
             bandValues[i] = 0;
         }
+        smoothFactor = 0.2f;
     }
 
     public SoundReaction(PApplet parent) {
@@ -35,7 +37,7 @@ public class SoundReaction {
     public void update() {
         fft.analyze();
         for (int i = 0; i < bandsCount; i++) {
-            bandValues[i] += fft.spectrum[i] - bandValues[i];
+            bandValues[i] += (fft.spectrum[i] - bandValues[i]) * smoothFactor;
         }
     }
 
