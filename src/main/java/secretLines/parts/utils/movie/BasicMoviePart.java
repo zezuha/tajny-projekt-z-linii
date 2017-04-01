@@ -1,7 +1,7 @@
-package secretLines.parts.movie;
+package secretLines.parts.utils.movie;
 
 import secretLines.parts.part.Part;
-import secretLines.utils.moviePlayer.MoviePlayer;
+import secretLines.media.moviePlayer.MoviePlayer;
 import processing.core.PApplet;
 
 public class BasicMoviePart extends Part {

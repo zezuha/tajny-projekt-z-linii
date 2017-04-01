@@ -1,4 +1,4 @@
-package secretLines.utils.moviePlayer;
+package secretLines.media.moviePlayer;
 
 import processing.core.PApplet;
 import processing.video.Movie;
