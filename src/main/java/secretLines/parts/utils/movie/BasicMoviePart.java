@@ -17,7 +17,7 @@ public class BasicMoviePart extends Part {
     @Override
     public void start() {
         super.start();
-        moviePlayer.play();
+        moviePlayer.loop();
 
     }
 

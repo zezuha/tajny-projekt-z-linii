@@ -17,11 +17,13 @@ public class SoundReactionTestPart extends Part {
     public void draw() {
         soundReaction.update();
         parent.background(0);
-        parent.fill(0, 0, 255);
         float bandWidth = parent.width / soundReaction.getBandsCount();
         for (int i = 0; i < soundReaction.getBandsCount(); i++) {
-            parent.rect(i * bandWidth, 0, bandWidth, soundReaction.getBandValue(i) * 100 * parent.height);
+            parent.fill(0, 0, 255);
+            parent.rect(i * bandWidth, 0, bandWidth, soundReaction.getBandValue(i) * parent.height);
+            parent.fill(255, 255, 255);
+            parent.text(i, i * bandWidth, 10);
+            parent.text(soundReaction.getBandValue(i), i * bandWidth, 20);
         }
-
     }
 }

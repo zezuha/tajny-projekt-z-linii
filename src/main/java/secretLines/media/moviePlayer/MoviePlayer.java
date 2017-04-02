@@ -6,8 +6,6 @@ import processing.video.Movie;
 import java.util.ArrayList;
 import java.util.List;
 
-import static secretLines.config.ConfigConstants.MAX_VIDEO_DURATION_S;
-
 public class MoviePlayer {
 
     protected PApplet parent;
@@ -18,7 +16,7 @@ public class MoviePlayer {
     public MoviePlayer(PApplet parent) {
         this.parent = parent;
         movies = new ArrayList<>();
-        maxDuration = MAX_VIDEO_DURATION_S;
+        maxDuration = 3600;
         musicVolume = 0;
     }
 

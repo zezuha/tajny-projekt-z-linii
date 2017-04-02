@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import processing.sound.AudioDevice;
 import processing.sound.FFT;
 import processing.sound.SoundFile;
+import secretLines.config.ConfigConstants;
 
 public class SoundReaction {
 
@@ -19,7 +20,7 @@ public class SoundReaction {
         this.parent = parent;
         this.bandsCount = bandsCount;
         device = new AudioDevice(parent, 44000, bandsCount);
-        soundSource = new SoundFile(parent, "test.mp3");
+        soundSource = new SoundFile(parent, ConfigConstants.MUSIC_PATH);
         soundSource.loop();
         fft = new FFT(parent, bandsCount);
         fft.input(soundSource);
@@ -46,6 +47,6 @@ public class SoundReaction {
     }
 
     public float getBandValue(int bandIndex) {
-        return bandValues[bandIndex];
+        return bandValues[bandIndex] * 2;
     }
 }
