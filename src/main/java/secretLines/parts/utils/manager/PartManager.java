@@ -1,16 +1,22 @@
 package secretLines.parts.utils.manager;
 
 import processing.core.PApplet;
+import processing.core.PConstants;
+import secretLines.config.ConfigConstants;
 import secretLines.media.soundReaction.SoundReaction;
 import secretLines.midi.MidiReaction;
+import secretLines.parts.abstractComposition.AbstractCompositionPart;
+import secretLines.parts.linesWizard.LinesDirtyWizard;
 import secretLines.parts.part.Part;
 import secretLines.parts.soundReactionTestPart.SoundReactionTestPart;
 import secretLines.parts.utils.name.*;
 import secretLines.parts.video3Dizer.Video3Dizer;
+import secretLines.parts.videoLayers.VideoLayers;
 
 import java.util.HashMap;
 
 import static processing.core.PApplet.map;
+import static processing.core.PConstants.SCREEN;
 
 public class PartManager implements MidiReaction {
 
@@ -33,11 +39,17 @@ public class PartManager implements MidiReaction {
     private void initPartsMap() {
         partsMap.put(PartName.SOUND_REACTION_TEST, new SoundReactionTestPart(parent, soundReaction));
         partsMap.put(PartName.VIDEO_3DIZER, new Video3Dizer(parent, soundReaction));
+        partsMap.put(PartName.VIDEO_LAYERS, new VideoLayers(parent, 16, ConfigConstants.LAYER3_PATH));
+        partsMap.put(PartName.LINES_DIRTY_WIZARD, new LinesDirtyWizard(parent, soundReaction));
+        partsMap.put(PartName.ABSTRACT_COMPOSITION, new AbstractCompositionPart(parent, soundReaction));
     }
 
     private void initNextPartMap() {
-        nextPartMap.put(PartName.VIDEO_3DIZER, PartName.SOUND_REACTION_TEST);
-        nextPartMap.put(PartName.SOUND_REACTION_TEST, PartName.VIDEO_3DIZER);
+        nextPartMap.put(PartName.SOUND_REACTION_TEST, PartName.ABSTRACT_COMPOSITION);
+        nextPartMap.put(PartName.ABSTRACT_COMPOSITION, PartName.LINES_DIRTY_WIZARD);
+        nextPartMap.put(PartName.LINES_DIRTY_WIZARD, PartName.VIDEO_3DIZER);
+        nextPartMap.put(PartName.VIDEO_3DIZER, PartName.VIDEO_LAYERS);
+        nextPartMap.put(PartName.VIDEO_LAYERS, PartName.SOUND_REACTION_TEST);
     }
 
     private void init() {
@@ -71,6 +83,8 @@ public class PartManager implements MidiReaction {
     }
 
     public void draw() {
+        parent.blendMode(PConstants.SCREEN);
+        soundReaction.update();
         parent.background(0);
         parent.pushMatrix();
         parent.pushStyle();
@@ -90,10 +104,27 @@ public class PartManager implements MidiReaction {
     }
 
     public void controllerChange(int channel, int number, int value) {
+        if(currentPart == PartName.LINES_DIRTY_WIZARD) {
+            LinesDirtyWizard linesDirtyWizard = (LinesDirtyWizard)currentPart();
+            linesDirtyWizard.controllerChange(channel, number, value);
+        }
+
         if(currentPart == PartName.VIDEO_3DIZER) {
             Video3Dizer video3Dizer = (Video3Dizer)currentPart();
             video3Dizer.controllerChange(channel, number, value);
         }
+
+        if(currentPart == PartName.VIDEO_LAYERS) {
+            VideoLayers videoLayers = (VideoLayers)currentPart();
+            videoLayers.controllerChange(channel, number, value);
+        }
+
+        if(currentPart == PartName.ABSTRACT_COMPOSITION) {
+            AbstractCompositionPart abstractCompositionPart = (AbstractCompositionPart)currentPart();
+            abstractCompositionPart.controllerChange(channel, number, value);
+        }
+        
+        
     }
 
     public void noteOn(int channel, int pitch, int velocity) {

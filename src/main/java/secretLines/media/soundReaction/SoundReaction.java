@@ -49,4 +49,8 @@ public class SoundReaction {
     public float getBandValue(int bandIndex) {
         return bandValues[bandIndex] * 2;
     }
+
+    public boolean isBandAbove(int bandIndex, float treshold) {
+        return getBandValue(bandIndex) > treshold;
+    }
 }

@@ -15,7 +15,6 @@ public class SoundReactionTestPart extends Part {
     }
 
     public void draw() {
-        soundReaction.update();
         parent.background(0);
         float bandWidth = parent.width / soundReaction.getBandsCount();
         for (int i = 0; i < soundReaction.getBandsCount(); i++) {

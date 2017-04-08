@@ -8,6 +8,7 @@ import secretLines.midi.MidiReaction;
 import secretLines.parts.utils.movie.BasicMoviePart;
 
 import static processing.core.PApplet.map;
+import static processing.core.PApplet.max;
 import static processing.core.PConstants.*;
 
 public class Video3Dizer extends BasicMoviePart implements MidiReaction {
@@ -20,26 +21,19 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
     private final int MAX_Z = 1000;
     private float maxZ;
 
+    private int color;
     private int base1Alpha;
     private int base2Alpha;
 
-    private int layer1Alpha;
-    private int layer2Alpha;
-    private int layer3Alpha;
     private float rotateY;
     private float rotateZ;
 
     public Video3Dizer(PApplet parent, SoundReaction soundReaction) {
-        super(parent, ConfigConstants.VIDEO_PATH,
-                ConfigConstants.LAYER1_PATH, ConfigConstants.LAYER2_PATH,
-                ConfigConstants.LAYER3_PATH);
+        super(parent, ConfigConstants.VIDEO_PATH);
         this.soundReaction = soundReaction;
         skip = 10;
         base1Alpha = 255;
         base2Alpha = 0;
-        layer1Alpha = 0;
-        layer2Alpha = 0;
-        layer3Alpha = 0;
         rotateY = 0;
         rotateZ = 0;
     }
@@ -65,6 +59,7 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
         updateMovie();
         maxZ = map(soundReaction.getBandValue(1), 0.2f, 0.6f, 0, MAX_Z);
         rotateZ = map(soundReaction.getBandValue(2), 0, 0.8f, 0.4f, 1);
+        color = (int)map(soundReaction.getBandValue(1), 0.2f, 0.6f, 0, 255);
     }
 
     private void drawStripes() {
@@ -102,7 +97,8 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
 
     private void drawGreenMesh() {
         skip = 15;
-        parent.stroke(0, 255, 0, base1Alpha);
+        parent.stroke(base1Alpha);
+//        parent.stroke(color, base1Alpha);
         parent.strokeWeight(3);
         for (int y = 0; y < movieImg.height - skip; y += skip) {
             parent.rotateY(rotateY);
@@ -113,19 +109,7 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
                 float z = map(parent.brightness(movieImg.pixels[index]), 0, 255, 0, maxZ);
                 float z1 = map(parent.brightness(movieImg.pixels[index1]), 0, 255, 0, maxZ);
                 parent.beginShape(LINES);
-                if (x % 2 == 0) {
-                    parent.stroke(255, 0, 0, base1Alpha);
-                }
-                else {
-                    parent.stroke(0, 255, 0, base1Alpha);
-                }
                 parent.vertex(x, y, z);
-                if (x % 2 == 0) {
-                    parent.stroke(0, 255, 0, base1Alpha);
-                }
-                else {
-                    parent.stroke(255, 0, 0, base1Alpha);
-                }
                 parent.vertex(x1, y, z1);
                 parent.endShape();
             }
@@ -153,7 +137,7 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
     private void drawMeshAndBoxes() {
         parent.pushStyle();
         parent.noFill();
-        parent.translate(100, 100, -1000);//400
+        parent.translate(100, 100, map(parent.mouseY, 0, parent.height, 0, 1000));//-1000
 
         parent.pushMatrix();
         parent.pushStyle();
@@ -162,65 +146,32 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
 
         parent.popStyle();
         parent.popMatrix();
-        parent.pushMatrix();
-        parent.pushStyle();
+//        parent.pushMatrix();
+//        parent.pushStyle();
 
-        drawStripes();
-
-        parent.popStyle();
-        parent.popMatrix();
+//        drawStripes();
+//
+//        parent.popStyle();
+//        parent.popMatrix();
 
         parent.popStyle();
     }
 
     @Override
     public void draw() {
-        parent.background(0);
         update();
-        parent.rotateX(map(parent.mouseY, 0, parent.height, 0, 1.7f));
+//        parent.rotateX(map(parent.mouseY, 0, parent.height, 0, 1.7f));
         drawMeshAndBoxes();
-        parent.blendMode(SCREEN);
 
-        parent.tint(layer1Alpha, layer1Alpha);
-        moviePlayer.drawMovieFullscreen(1);
-        parent.noTint();
-
-        parent.tint(layer2Alpha, layer2Alpha);
-        moviePlayer.drawMovieFullscreen(2);
-        parent.noTint();
-
-        parent.tint(layer3Alpha, layer3Alpha);
-        moviePlayer.drawMovieFullscreen(3);
-        parent.noTint();
     }
 
     public void controllerChange(int channel, int number, int value) {
         switch (number) {
-            case 0: {
-                layer1Alpha = (int)map(value, 0, 127, 0, 255);
-            }
-            break;
             case 1: {
-                layer2Alpha = (int)map(value, 0, 127, 0, 255);
-            }
-            break;
-            case 2: {
-                layer3Alpha = (int)map(value, 0, 127, 0, 255);
-            }
-            break;
-            case 3: {
-                rotateY = map(value, 0, 127, 0, 0.4f);
-            }
-            break;
-            case 4: {
-                rotateZ = map(value, 0, 127, 0, 6.28f);
-            }
-            break;
-            case 16: {
                 base1Alpha = (int)map(value, 0, 127, 0, 255);
             }
             break;
-            case 17: {
+            case 2: {
                 base2Alpha = (int)map(value, 0, 127, 0, 255);
             }
             break;
