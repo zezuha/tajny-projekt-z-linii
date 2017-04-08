@@ -21,6 +21,7 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
     private final int MAX_Z = 1000;
     private float maxZ;
 
+    private int currentMovieIndex;
     private int color;
     private int base1Alpha;
     private int base2Alpha;
@@ -29,19 +30,21 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
     private float rotateZ;
 
     public Video3Dizer(PApplet parent, SoundReaction soundReaction) {
-        super(parent, ConfigConstants.VIDEO_PATH);
+        super(parent, ConfigConstants.GRADIENT1_PATH, ConfigConstants.GRADIENT2_PATH);
         this.soundReaction = soundReaction;
         skip = 10;
-        base1Alpha = 255;
+        base1Alpha = 0;
         base2Alpha = 0;
         rotateY = 0;
         rotateZ = 0;
+        currentMovieIndex = 0;
     }
 
     @Override
     public void start() {
         super.start();
-        moviePlayer.speed(0, 5);
+        moviePlayer.loop(currentMovieIndex);
+//        moviePlayer.speed(0, 5);
     }
 
     @Override
@@ -51,7 +54,7 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
 
     private void updateMovie() {
         moviePlayer.readFrame();
-        movieImg = moviePlayer.getMovie();
+        movieImg = moviePlayer.getMovie(currentMovieIndex);
         movieImg.loadPixels();
     }
 
@@ -173,6 +176,19 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
             break;
             case 2: {
                 base2Alpha = (int)map(value, 0, 127, 0, 255);
+            }
+            break;
+            case 61: { //left marker arrow
+                moviePlayer.stop(currentMovieIndex);
+                currentMovieIndex = 0;
+                moviePlayer.loop(currentMovieIndex);
+
+            }
+            break;
+            case 62: { //right marker arrow
+                moviePlayer.stop(currentMovieIndex);
+                currentMovieIndex = 1;
+                moviePlayer.loop(currentMovieIndex);
             }
             break;
         }

@@ -38,18 +38,12 @@ public class PartManager implements MidiReaction {
 
     private void initPartsMap() {
         partsMap.put(PartName.SOUND_REACTION_TEST, new SoundReactionTestPart(parent, soundReaction));
-        partsMap.put(PartName.VIDEO_3DIZER, new Video3Dizer(parent, soundReaction));
-        partsMap.put(PartName.VIDEO_LAYERS, new VideoLayers(parent, 16, ConfigConstants.LAYER3_PATH));
         partsMap.put(PartName.LINES_DIRTY_WIZARD, new LinesDirtyWizard(parent, soundReaction));
-        partsMap.put(PartName.ABSTRACT_COMPOSITION, new AbstractCompositionPart(parent, soundReaction));
     }
 
     private void initNextPartMap() {
-        nextPartMap.put(PartName.SOUND_REACTION_TEST, PartName.ABSTRACT_COMPOSITION);
-        nextPartMap.put(PartName.ABSTRACT_COMPOSITION, PartName.LINES_DIRTY_WIZARD);
-        nextPartMap.put(PartName.LINES_DIRTY_WIZARD, PartName.VIDEO_3DIZER);
-        nextPartMap.put(PartName.VIDEO_3DIZER, PartName.VIDEO_LAYERS);
-        nextPartMap.put(PartName.VIDEO_LAYERS, PartName.SOUND_REACTION_TEST);
+        nextPartMap.put(PartName.SOUND_REACTION_TEST, PartName.LINES_DIRTY_WIZARD);
+        nextPartMap.put(PartName.LINES_DIRTY_WIZARD, PartName.SOUND_REACTION_TEST);
     }
 
     private void init() {
@@ -104,6 +98,7 @@ public class PartManager implements MidiReaction {
     }
 
     public void controllerChange(int channel, int number, int value) {
+        soundReaction.controllerChange(channel, number, value);
         if(currentPart == PartName.LINES_DIRTY_WIZARD) {
             LinesDirtyWizard linesDirtyWizard = (LinesDirtyWizard)currentPart();
             linesDirtyWizard.controllerChange(channel, number, value);

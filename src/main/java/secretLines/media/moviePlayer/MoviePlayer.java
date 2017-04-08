@@ -51,6 +51,11 @@ public class MoviePlayer {
         }
     }
 
+    public void play(int movieIndex) {
+        getMovie(movieIndex).play();
+        getMovie(movieIndex).volume(0);
+    }
+
     public void play() {
         for(Movie movie: movies) {
             movie.play();
@@ -58,11 +63,21 @@ public class MoviePlayer {
         }
     }
 
+    public void loop(int movieIndex) {
+        getMovie(movieIndex).loop();
+        getMovie(movieIndex).volume(0);
+    }
+
     public void loop() {
         for(Movie movie: movies) {
             movie.loop();
             movie.volume(0);
         }
+    }
+
+    public void stop(int movieIndex) {
+        getMovie(movieIndex).stop();
+        getMovie(movieIndex).volume(0);
     }
 
     public void stop() {

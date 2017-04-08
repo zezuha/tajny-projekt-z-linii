@@ -29,6 +29,14 @@ public class VideoLayers extends BasicMoviePart implements MidiReaction {
     }
 
     @Override
+    public void start() {
+        super.start();
+        for(VideoLayer videoLayer: videoLayers) {
+            videoLayer.setAlpha(0);
+        }
+    }
+
+    @Override
     public void draw() {
         moviePlayer.readFrame();
         for(VideoLayer videoLayer: videoLayers) {
