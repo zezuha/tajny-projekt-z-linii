@@ -11,7 +11,7 @@ public final class ConfigConstants {
     //    public static final String GRADIENT1_PATH = "video/heaven mandel 2.mov";
     public static final String GRADIENT1_PATH = "video/gradient5_linie.mp4";
     public static final String GRADIENT2_PATH = "video/gradient_tety.mp4";
-    public static final String MUSIC_PATH = "muzyka.mp3";
+    public static final String MUSIC_PATH = "REFUSEN.mp3";
     public static final String LAYER1_PATH = "video/layers/linie2.5.mp4";
     public static final String LAYER2_PATH = "video/layers/linie3d_linie_geometrycznie_BeamMeUp_normal.mp4";
     public static final String LAYER3_PATH = "video/layers/linie3d_linie_geometrycznie_gwiazda.mp4";

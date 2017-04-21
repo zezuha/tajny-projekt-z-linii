@@ -21,16 +21,18 @@ public class AbstractCompositionPart extends Part implements MidiReaction {
     }
 
     public void draw() {
+        System.out.println("ABSTRACT DRAAW");
         parent.strokeCap(SQUARE);
         parent.strokeWeight(12);
         parent.translate(830, 290, -10);
 
-        kickSize = soundReaction.getBandValue(0) * 64;
-        snareSize = soundReaction.getBandValue(1) * 64;
-        hatSize = soundReaction.getBandValue(2) * 64;
+        kickSize = soundReaction.getBandValueLog10(0) * 64;
+        snareSize = soundReaction.getBandValueLog10(1) * 64;
+        hatSize = soundReaction.getBandValueLog10(2) * 64;
 
 //        parent.stroke(kickSize * 9, snareSize * 10, hatSize * 11, alpha);
-        parent.stroke(alpha, alpha);
+//        parent.stroke(alpha, alpha);
+        parent.stroke(255);
 
         parent.strokeWeight(15);
         parent.line(0, -6 + kickSize, 300, -6 + kickSize);
@@ -86,7 +88,6 @@ public class AbstractCompositionPart extends Part implements MidiReaction {
     public void controllerChange(int channel, int number, int value) {
        if(number == 0) {
            alpha = (int)map(value, 0, 127, 0, 255);
-           System.out.println("abstract change ___________ " + alpha);
        }
     }
 

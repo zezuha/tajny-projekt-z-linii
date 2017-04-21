@@ -19,29 +19,33 @@ public class DotsPart extends Part implements MidiReaction {
         alpha1 = 0;
     }
 
-    public void draw() {
-        int skip = (int)(80 + soundReaction.getBandValue(1) * 350);
 
-        if(alpha1 > 50) {
+
+    public void draw() {
+        parent.pushMatrix();
+        int skip = (int)(80 + soundReaction.getBandValueLog10(1) * 350);
+
+        if(alpha1 > 1) {
             parent.stroke(alpha1, alpha1);
             parent.strokeWeight(4);
-//        parent.stroke (map(soundReaction.getBandValue(1), 0, 0.7f, 0, alpha1), alpha1);
+//        parent.stroke (map(soundReaction.getBandValueLog10(1), 0, 0.7f, 0, alpha1), alpha1);
             for (int x = 1; x < parent.width; x += skip) {
                 for (int y = 1; y < parent.height; y += skip) {
                     parent.line(x, y, x, y + 2);
                 }
             }
         }
-        if(alpha2 > 50) {
+        if(alpha2 > 1) {
             parent.stroke(alpha2, alpha2);
             parent.strokeWeight(map(skip, 80, 430, 2, 100 ));
-//        parent.stroke (map(soundReaction.getBandValue(1), 0, 0.7f, 0, alpha1), alpha1);
+//        parent.stroke (map(soundReaction.getBandValueLog10(1), 0, 0.7f, 0, alpha1), alpha1);
             for (int x = 1; x < parent.width; x += skip) {
                 for (int y = 1; y < parent.height; y += 150) {
                     parent.line (x+50, y-62, x+60, y+270);
                 }
             }
         }
+        parent.popMatrix();
     }
 
     public void controllerChange(int channel, int number, int value) {
@@ -49,7 +53,7 @@ public class DotsPart extends Part implements MidiReaction {
             alpha1 = (int)map(value, 0, 127, 0, 255);
         }
         if(number == 3) {
-            alpha2 = (int)map(value, 0, 127, 0, 255);
+            alpha2 = (int)map(value, 0, 127, 0, 200);
         }
     }
 

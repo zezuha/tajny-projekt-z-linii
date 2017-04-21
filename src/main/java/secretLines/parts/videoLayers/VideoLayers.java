@@ -10,6 +10,8 @@ import secretLines.parts.videoLayers.layer.VideoLayer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static processing.core.PApplet.map;
+
 public class VideoLayers extends BasicMoviePart implements MidiReaction {
 
     private List<VideoLayer> videoLayers;
@@ -46,9 +48,13 @@ public class VideoLayers extends BasicMoviePart implements MidiReaction {
 
     public void controllerChange(int channel, int number, int value) {
         for (int i = 0; i < videoLayers.size(); i++) {
-            if(number == i + controlNumberOffset) {
-                getVideoLayer(i).controllerChange(value);
-                System.out.println("video layer " + i + " -  control change");
+            if(number == i * 2 + controlNumberOffset) {
+                getVideoLayer(i).setAlpha(
+                        (int)map(value, 0, 127, 0, 255));
+            }
+            if(number == i * 2 + controlNumberOffset + 1) {
+                getVideoLayer(i).setScale(
+                        map(value, 0, 127, 0.2f, 4));
             }
         }
     }
