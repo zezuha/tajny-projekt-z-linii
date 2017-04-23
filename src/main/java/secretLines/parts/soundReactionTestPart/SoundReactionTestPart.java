@@ -20,6 +20,7 @@ public class SoundReactionTestPart extends Part {
     }
 
     public void draw() {
+        parent.pushMatrix();
         float bandWidth = parent.width / soundReaction.getBandsCount();
         parent.stroke(alpha, alpha);
         parent.fill(alpha, alpha);
@@ -44,6 +45,7 @@ public class SoundReactionTestPart extends Part {
                 }
             }
         }
+        parent.popMatrix();
     }
 
     @Override

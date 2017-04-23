@@ -2,7 +2,7 @@ package secretLines.parts.videoLayers;
 
 import processing.core.PApplet;
 import processing.video.Movie;
-import secretLines.config.ConfigConstants;
+import secretLines.media.soundReaction.SoundReaction;
 import secretLines.midi.MidiReaction;
 import secretLines.parts.utils.movie.BasicMoviePart;
 import secretLines.parts.videoLayers.layer.VideoLayer;
@@ -14,6 +14,7 @@ import static processing.core.PApplet.map;
 
 public class VideoLayers extends BasicMoviePart implements MidiReaction {
 
+//    private SoundReaction
     private List<VideoLayer> videoLayers;
     private int controlNumberOffset;
 
