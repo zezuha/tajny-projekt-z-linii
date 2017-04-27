@@ -34,27 +34,24 @@ public class LinesDirtyWizard extends Part implements MidiReaction {
                 ConfigConstants.LAYER1_PATH,
                 ConfigConstants.LAYER2_PATH,
                 ConfigConstants.LAYER3_PATH,
-                ConfigConstants.LAYER4_PATH//,
-//                ConfigConstants.LAYER5_PATH
+                ConfigConstants.LAYER4_PATH
                 );
         videoLayers1 = new VideoLayers(parent, 16,
                 ConfigConstants.LAYER7_PATH,
                 ConfigConstants.LAYER8_PATH,
-                ConfigConstants.LAYER9_PATH,
+                ConfigConstants.LAYER17_PATH,
                 ConfigConstants.LAYER10_PATH
-//                ConfigConstants.LAYER11_PATH
         );
         videoLayers2 = new VideoLayers(parent, 16,
                 ConfigConstants.LAYER13_PATH,
                 ConfigConstants.LAYER14_PATH,
-                ConfigConstants.LAYER14_PATH,
-                ConfigConstants.LAYER15_PATH
+                ConfigConstants.LAYER20_PATH,
+                ConfigConstants.LAYER19_PATH
         );
         videoLayers3 = new VideoLayers(parent, 16,
                 ConfigConstants.LAYER6_PATH,
                 ConfigConstants.LAYER12_PATH,
-                ConfigConstants.LAYER14_PATH,
-//                ConfigConstants.LAYER15_PATH,
+                ConfigConstants.LAYER23_PATH,
                 ConfigConstants.GRADIENT1_PATH
         );
 //        blendModesWizard = new BlendModesWizard(parent);

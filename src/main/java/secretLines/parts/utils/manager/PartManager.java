@@ -9,6 +9,7 @@ import secretLines.parts.abstractComposition.AbstractCompositionPart;
 import secretLines.parts.linesWizard.LinesDirtyWizard;
 import secretLines.parts.part.Part;
 import secretLines.parts.soundReactionTestPart.SoundReactionTestPart;
+import secretLines.parts.urodziny.AnnaHelena;
 import secretLines.parts.utils.name.*;
 import secretLines.parts.video3Dizer.Video3Dizer;
 import secretLines.parts.videoLayers.VideoLayers;
@@ -39,10 +40,12 @@ public class PartManager implements MidiReaction {
     private void initPartsMap() {
         partsMap.put(PartName.SOUND_REACTION_TEST, new SoundReactionTestPart(parent, soundReaction));
         partsMap.put(PartName.LINES_DIRTY_WIZARD, new LinesDirtyWizard(parent, soundReaction));
+        partsMap.put(PartName.ANNA_PART, new AnnaHelena(parent));
     }
 
     private void initNextPartMap() {
-        nextPartMap.put(PartName.SOUND_REACTION_TEST, PartName.LINES_DIRTY_WIZARD);
+        nextPartMap.put(PartName.SOUND_REACTION_TEST, PartName.ANNA_PART);
+        nextPartMap.put(PartName.ANNA_PART, PartName.LINES_DIRTY_WIZARD);
         nextPartMap.put(PartName.LINES_DIRTY_WIZARD, PartName.SOUND_REACTION_TEST);
     }
 

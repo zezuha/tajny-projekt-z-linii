@@ -30,7 +30,7 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
     private float rotateZ;
 
     public Video3Dizer(PApplet parent, SoundReaction soundReaction) {
-        super(parent, ConfigConstants.GRADIENT1_PATH, ConfigConstants.GRADIENT2_PATH);
+        super(parent, ConfigConstants.GRADIENT1_PATH, ConfigConstants.GRADIENT2_PATH, ConfigConstants.GRADIENT3_PATH, ConfigConstants.GRADIENT4_PATH);
         this.soundReaction = soundReaction;
         skip = 10;
         base1Alpha = 0;
@@ -187,7 +187,10 @@ public class Video3Dizer extends BasicMoviePart implements MidiReaction {
             break;
             case 62: { //right marker arrow
                 moviePlayer.stop(currentMovieIndex);
-                currentMovieIndex = 1;
+                currentMovieIndex++;
+                if(currentMovieIndex > moviePlayer.getMoviesCount() - 1) {
+                    currentMovieIndex = 0;
+                }
                 moviePlayer.loop(currentMovieIndex);
             }
             break;

@@ -26,7 +26,7 @@ public class SoundReaction implements MidiReaction {
         this.parent = parent;
         this.bandsCount = bandsCount;
         device = new AudioDevice(parent, 44000, bandsCount);
-        soundSource = new AudioIn(parent, 0);//new SoundFile(parent, ConfigConstants.MUSIC_PATH);
+        soundSource = new AudioIn(parent, 1);//new SoundFile(parent, ConfigConstants.MUSIC_PATH);
 //        soundSource = new SoundFile(parent, ConfigConstants.MUSIC_PATH);
         soundSource.play();
 //        soundSource.loop();
@@ -66,7 +66,7 @@ public class SoundReaction implements MidiReaction {
     public void controllerChange(int channel, int number, int value) {
         switch (number) {
             case 7: { //most right slider
-                levelReduction = map(value, 0, 127, 0.1f, 1);
+                levelReduction = map(value, 0, 127, 0.1f, 2);
             }
             break;
             case 23: { //most right knob
